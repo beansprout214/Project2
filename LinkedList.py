@@ -23,6 +23,17 @@ class LinkedList():
             self.set_tail(node)
 
 
+    def __len__(self):
+        curr = self.__head
+        if not curr:
+            return 0
+        count = 0
+        while curr:
+            count += 1
+            curr = curr.get_next()
+        return count
+
+
     def get_head(self):
         return self.__head or None
 

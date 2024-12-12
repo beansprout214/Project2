@@ -111,6 +111,9 @@ class Student():
     def get_intended_major(self):
         return self.__intended_major
 
+    def get_course_list(self):
+        return self.__course_list
+
     # Setters
     def set_name(self, name: str):
         self.__name = name
@@ -138,3 +141,6 @@ class Student():
 
     def set_intended_major(self, intended_major: str):
         self.__intended_major = intended_major
+
+    def set_course_list(self, course_list: LinkedList):
+        self.__course_list = course_list

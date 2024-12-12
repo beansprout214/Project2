@@ -4,14 +4,18 @@
 # Date: 11/08/24
 #
 # Description: Allows for the organization of the Student class in a single list
-
+from venv import create
 
 from PhoneNumber import PhoneNumber
 from Semester import Semester
 from Address import Address
 from Email import Email
 from Date import Date
+
+from LinkedList import LinkedList
+from Course import Course
 from Name import Name
+from Node import Node
 
 from Student import Student
 from Tester import students
@@ -194,6 +198,39 @@ def create_new_name():
         middle_name = input_string()
     return Name(first_name, middle_name, last_name)
 
+def create_new_course():
+    print(f"Creating a new course!")
+    print(f"Please enter the course number:")
+    course_number = input_string()
+    print(f"Please enter the course semester taken:")
+    semester_taken = input_string()
+    print(f"Please enter the course delivery method:")
+    delivery_method = input_string()
+    print(f"Please enter the course status:")
+    status = input_string()
+    print(f"Please enter the course grade:")
+    grade = input_string()
+
+    return Course(course_number,semester_taken,delivery_method,status,grade)
+
+def create_new_course_list():
+    print(f"Creating a new course list!")
+    course_list = LinkedList()
+    course = create_new_course()
+    course_list.append(course)
+    while True:
+        print(f"Would you like to add\n"
+              f"another course?\n"
+              f"1 - Yes      2 - No")
+        cancel = input_integer() != 1
+        if cancel:
+            break
+        course = create_new_course()
+        course_list.append(course)
+    print(f"Course list with {len(course_list)}\n courses"
+          f"successfully created!")
+    return course_list
+
 def create_new_student():
     print(f"Creating a new student!")
 
@@ -269,50 +306,136 @@ def pick_student():
     return students[index],index
 
 def edit_student():
-    print(f"What attribute would you like to edit?\n"
-          f"")
+    print(f"Choose a student to edit:")
+    student,index = pick_student()
 
-    user_choice = input_integer()
+    if student:
+        print(f"What attribute would you like to edit?\n"
+              f"Type 0 to cancel.\n"
+              f"1 - Name\n"
+              f"2 - ID\n"
+              f"3 - Mailing Address\n"
+              f"4 - Email Address List\n"
+              f"5 - Phone Number List\n"
+              f"6 - Birth Date\n"
+              f"7 - Acceptance Date\n"
+              f"8 - Start Semester\n"
+              f"9 - Intended Major\n"
+              f"10 - Course List")
 
-    if user_choice == 1:
-        new_name = input_string()
-        student.set_name(new_name)
+        user_input = input_integer()
 
-    elif user_choice == 2:
-        new_id = input_integer()
-        student.set_id(new_id)
+        if user_input == 1:
+            new_name = create_new_name()
+            print(f"Old Value: {student.get_name()}\n"
+                  f"New Value: {new_name}\n"
+                  f"\n"
+                  f"Are you sure you'd like to\n"
+                  f"change this student's name?\n"
+                  f"1 - Yes      2 - No")
+            if input_integer() == 1:
+                student.set_name(new_name)
 
-    elif user_choice == 3:
-        new_mailing_address = create_new_address()
-        student.set_mailing_address(new_mailing_address)
+        elif user_input == 2:
+            new_id = input_integer()
+            print(f"Old Value: {student.get_id()}\n"
+                  f"New Value: {new_id}\n"
+                  f"\n"
+                  f"Are you sure you'd like to\n"
+                  f"change this student's ID?\n"
+                  f"1 - Yes      2 - No")
+            if input_integer() == 1:
+                student.set_id(new_id)
 
-    elif user_choice == 4:
-        new_email_address = create_new_email()
-        student.set_email_address(new_email_address)
+        elif user_input == 3:
+            new_mailing_address = create_new_address()
+            print(f"Old Value: {student.get_mailing_address()}\n"
+                  f"New Value: {new_mailing_address}\n"
+                  f"\n"
+                  f"Are you sure you'd like to\n"
+                  f"change this student's mailing address?\n"
+                  f"1 - Yes      2 - No")
+            if input_integer() == 1:
+                student.set_mailing_address(new_mailing_address)
 
-    elif user_choice == 5:
-        new_phone_number_list = create_new_phone_number_instance()
-        student.set_phone_number(new_phone_number_list)
+        elif user_input == 4:
+            new_email_list = create_new_email_list()
+            print(f"Old Value: {student.get_email_address()}\n"
+                  f"New Value: {new_email_list}\n"
+                  f"\n"
+                  f"Are you sure you'd like to\n"
+                  f"change this student's email list?\n"
+                  f"1 - Yes      2 - No")
+            if input_integer() == 1:
+                student.set_email_address(new_email_list)
 
-    elif user_choice == 6:
-        new_birth_date = create_new_date()
-        student.set_birth_date(new_birth_date)
+        elif user_input == 5:
+            new_phone_number_list = create_new_phone_number_list()
+            print(f"Old Value: {student.get_phone_number()}\n"
+                  f"New Value: {new_phone_number_list}\n"
+                  f"\n"
+                  f"Are you sure you'd like to\n"
+                  f"change this student's phone number list?\n"
+                  f"1 - Yes      2 - No")
+            if input_integer() == 1:
+                student.set_phone_number(new_phone_number_list)
 
-    elif user_choice == 7:
-        new_acceptance_date = create_new_date()
-        student.set_acceptance_date(new_acceptance_date)
+        elif user_input == 6:
+            new_birth_date = create_new_date()
+            print(f"Old Value: {student.get_birth_date()}\n"
+                  f"New Value: {new_birth_date}\n"
+                  f"\n"
+                  f"Are you sure you'd like to\n"
+                  f"change this student's birth date?\n"
+                  f"1 - Yes      2 - No")
+            if input_integer() == 1:
+                student.set_birth_date(new_birth_date)
 
-    elif user_choice == 8:
-        new_start_semester = create_new_semester()
-        student.set_start_semester(new_start_semester)
+        elif user_input == 7:
+            new_acceptance_date = create_new_date()
+            print(f"Old Value: {student.get_acceptance_date()}\n"
+                  f"New Value: {new_acceptance_date}\n"
+                  f"\n"
+                  f"Are you sure you'd like to\n"
+                  f"change this student's acceptance date?\n"
+                  f"1 - Yes      2 - No")
+            if input_integer() == 1:
+                student.set_acceptance_date(new_acceptance_date)
 
-    elif user_choice == 9:
-        new_intended_major = input_string()
-        student.set_intended_major(new_intended_major)
+        elif user_input == 8:
+            new_start_semester = create_new_semester()
+            print(f"Old Value: {student.get_start_semester()}\n"
+                  f"New Value: {new_start_semester}\n"
+                  f"\n"
+                  f"Are you sure you'd like to\n"
+                  f"change this student's start semester?\n"
+                  f"1 - Yes      2 - No")
+            if input_integer() == 1:
+                student.set_start_semester(new_start_semester)
 
-    else:
-        print(f"Nothing selected! Cancelling edit.")
-    
+        elif user_input == 9:
+            new_intended_major = input_string()
+            print(f"Old Value: {student.get_intended_major()}\n"
+                  f"New Value: {new_intended_major}\n"
+                  f"\n"
+                  f"Are you sure you'd like to\n"
+                  f"change this student's intended major?\n"
+                  f"1 - Yes      2 - No")
+            if input_integer() == 1:
+                student.set_intended_major(new_intended_major)
+
+        elif user_input == 10:
+            new_course_list = create_new_course_list()
+            print(f"Old Value: {student.get_course_list()}\n"
+                  f"New Value: {new_course_list}\n"
+                  f"\n"
+                  f"Are you sure you'd like to\n"
+                  f"change this student's course list?\n"
+                  f"1 - Yes      2 - No")
+            if input_integer() == 1:
+                student.set_course_list(new_course_list)
+
+    print(f"Edit cancelled; Student unchanged.")
     return
 
 def add_student():
@@ -352,7 +475,17 @@ def display_student():
     print(f"Student display cancelled.")
     return
 
+def add_advisor():
+    return
 
+def edit_advisor():
+    return
+
+def delete_advisor():
+    return
+
+def display_advisor():
+    return
 
 # Menu definition
 # Handles user input and uses the other defined functions accordingly
@@ -362,11 +495,18 @@ def menu():
     user_option = 0
     while user_option != 5:
         print(f"What would you like to do?\n"
+              f"\n"
               f"1 - Add a student to the list\n"
-              f"2 - Edit a student from the list\n"
+              f"2 - Edit a student in the list\n"
               f"3 - Delete a student from the list\n"
               f"4 - Display a student's info\n"
-              f"5 - Exit the application")
+              f"\n"
+              f"5 - Add an advisor to the list\n"
+              f"6 - Edit an advisor in the list\n"
+              f"7 - Delete an advisor from the list\n"
+              f"8 - Display an advisor's info\n"
+              f"\n"
+              f"9 - Exit the application")
 
         user_option = input_integer()
 
@@ -378,6 +518,15 @@ def menu():
             delete_student()
         elif user_option == 4:
             display_student()
+
+        if user_option == 5:
+            add_advisor()
+        elif user_option == 6:
+            edit_advisor()
+        elif user_option == 7:
+            delete_advisor()
+        elif user_option == 8:
+            display_advisor()
 
     print(f"Thank you for using this student and advisor management program.")
 
