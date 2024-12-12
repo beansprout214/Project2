@@ -16,8 +16,7 @@ class Semester():
         self.__year = year
 
     def __str__(self):
-        return (f"Season: {self.__season}\n"
-                f"Year: {self.__year}")
+        return f"Semester: {self.__season} {self.__year}"
 
     # Getters
     def get_season(self):
