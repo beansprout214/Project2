@@ -91,7 +91,7 @@ class LinkedList():
             return
 
         if node == self.__head:
-            self.__head = next
+            self.__head = node.get_next()
             return
 
         prev = self.__head
