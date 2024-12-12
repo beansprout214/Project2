@@ -7,6 +7,9 @@
 # Is a singly linked list with a head and tail
 
 
+from Node import Node
+
+
 class LinkedList():
     def __init__(self,
                  head = None,
@@ -34,6 +37,17 @@ class LinkedList():
         return count
 
 
+    def __str__(self):
+        str = ""
+        curr = self.__head
+        if curr is None:
+            return "Empty"
+        while curr:
+            str += f"{curr.get_data()}"
+            curr = curr.get_next()
+        return str
+
+
     def get_head(self):
         return self.__head or None
 
@@ -48,26 +62,36 @@ class LinkedList():
                  node):
         self.__tail = node
 
-    def append(self,
-                 node):
-
-        curr_tail = self.get_tail()
-
+    def insert(self,
+               data):
+        new_node = Node(data)
+        curr_tail = self.__tail
         if curr_tail:
-            curr_tail.set_next(node)
-            self.set_tail(node)
-        else:
-            self.set_head(node)
-            self.set_tail(node)
+            curr_tail.set_next(new_node)
+            self.__tail = new_node
+            return
+        self.__head = new_node
+        self.__tail = new_node
 
-    def prepend(self,
-               node):
+    def find(self,
+             key):
+        curr = self.__head
+        while curr and curr.get_data() != key:
+            curr = curr.get_next()
+        return curr
 
-        curr_head = self.get_head()
+    def delete(self,
+               key):
+        node = self.find(key)
+        if node is None:
+            return
 
-        if curr_head:
-            node.set_next(curr_head)
-            self.set_head(node)
-        else:
-            self.set_head(node)
-            self.set_tail(node)
+        if node == self.__head:
+            self.__head = next
+            return
+
+        prev = self.__head
+        while prev.get_next() != node:
+            prev = prev.get_next()
+        prev.set_next(node.get_next())
+        return
