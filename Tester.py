@@ -1,9 +1,11 @@
 # Name: Hunter Becker
 # Course: CMPSC 132
-# File Name: Address.py
-# Date: 11/08/24
+# File Name: Tester.py
+# Date: 12/12/24
 #
-# Description: Tests the student and aggregate class
+# Description: Contains testing information
+# 3 Testing students
+# 1 Testing advisor
 
 
 from PhoneNumber import PhoneNumber

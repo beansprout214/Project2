@@ -1,3 +1,11 @@
+# Name: Chris Gallazeski
+# Course: CMPSC 132
+# File Name: Advisor.py
+# Date: 12/12/24
+#
+# Description: Contains the Advisor class
+
+
 class Advisor():
     def __init__(self,
                  name,

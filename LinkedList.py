@@ -1,10 +1,14 @@
-# Name: Hunter Becker
+# Name: Chris Gallazeski
 # Course: CMPSC 132
 # File Name: LinkedList.py
-# Date: 11/19/24
+# Date: 12/12/24
 #
 # Description: Contains the LinkedList class
-# Is a singly linked list with a head and tail
+# __len__ returns the length of the linked list
+# __str__ returns the linked list's contents as a string
+# insert(data) appends a new node with Data
+# find(key) returns the node with data matching key, if it exists
+# delete(key) deletes the node with data matching key, if it exists
 
 
 from Node import Node

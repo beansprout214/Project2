@@ -1,11 +1,9 @@
 # Name: Hunter Becker
 # Course: CMPSC 132
 # File Name: Address.py
-# Date: 11/08/24
+# Date: 12/12/24
 #
 # Description: Contains the Address class
-# Attributes: street, city, state, zip, type
-from os import strerror
 
 
 class Address():

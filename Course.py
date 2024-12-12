@@ -1,3 +1,10 @@
+# Name: Hunter Becker
+# Course: CMPSC 132
+# File Name: Course.py
+# Date: 12/12/24
+#
+# Description: Contains the Course class
+
 class Course():
     def __init__(self,
                  course_number,

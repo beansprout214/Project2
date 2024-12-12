@@ -1,10 +1,9 @@
 # Name: Hunter Becker
 # Course: CMPSC 132
-# File Name: Address.py
-# Date: 11/08/24
+# File Name: Semester.py
+# Date: 12/12/24
 #
-# Description: Contains the Semester
-# Attributes: season, year
+# Description: Contains the Semester class
 
 
 class Semester():

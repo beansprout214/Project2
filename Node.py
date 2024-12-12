@@ -1,10 +1,9 @@
-# Name: Hunter Becker
+# Name: Chris Gallazeski
 # Course: CMPSC 132
 # File Name: Node.py
-# Date: 11/19/24
+# Date: 12/12/24
 #
 # Description: Contains the Node class
-# Is a single node with data and pointer to the next node
 
 
 class Node():

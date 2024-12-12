@@ -1,10 +1,12 @@
-# Name: Chris Gallazeski
+# Name: Hunter Becker
 # Course: CMPSC 132
 # File Name: Menu.py
-# Date: 11/08/24
+# Date: 12/12/24
 #
-# Description: Allows for the organization of the Student class in a single list
-from venv import create
+# Description: Allows for the management of student and advisor objects
+# Can add, edit, delete, and display students
+# Can add, edit, delete, and display advisors
+
 
 from PhoneNumber import PhoneNumber
 from Semester import Semester
@@ -16,7 +18,6 @@ from LinkedList import LinkedList
 from Advisor import Advisor
 from Course import Course
 from Name import Name
-from Node import Node
 
 from Student import Student
 from Tester import students, advisors

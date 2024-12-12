@@ -1,10 +1,9 @@
-# Name: Chris Gallazeski
+# Name: Hunter Becker
 # Course: CMPSC 132
 # File Name: Date.py
-# Date: 11/08/24
+# Date: 12/12/24
 #
 # Description: Contains the Date class
-# Attributes: month, day, year
 
 
 class Date():

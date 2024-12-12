@@ -1,10 +1,9 @@
-# Name: Hunter Becker
+# Name: Chris Gallazeski
 # Course: CMPSC 132
-# File Name: Address.py
-# Date: 11/08/24
+# File Name: Studet.py
+# Date: 12/12/24
 #
 # Description: Contains the Student class
-# Attributes: name, id, mailing_address, email_address, phone_number, birth_date, acceptance_date, start_semester, intended_major
 
 
 from PhoneNumber import PhoneNumber

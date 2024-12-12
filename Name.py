@@ -1,3 +1,11 @@
+# Name: Hunter Becker
+# Course: CMPSC 132
+# File Name: Name.py
+# Date: 12/12/24
+#
+# Description: Contains the Name class
+
+
 class Name():
     def __init__(self,
                  first_name,

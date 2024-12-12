@@ -1,10 +1,9 @@
 # Name: Chris Gallazeski
 # Course: CMPSC 132
-# File Name: Address.py
-# Date: 11/08/24
+# File Name: Email.py
+# Date: 12/12/24
 #
 # Description: Contains the Email class
-# Attributes: address, type
 
 
 class Email():
