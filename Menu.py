@@ -288,7 +288,7 @@ def create_new_student():
 def pick_student():
     if len(students) == 0:
         print(f"Cannot proceed further; No students in list!")
-        return False
+        return False,None
 
     index = 1
 
@@ -314,7 +314,7 @@ def pick_student():
 def pick_advisor():
     if len(advisors) == 0:
         print(f"Cannot proceed further; No advisors in list!")
-        return False
+        return False,None
 
     index = 1
 
@@ -336,6 +336,171 @@ def pick_advisor():
     index = user_choice - 1
 
     return advisors[index],index
+
+def edit_course():
+    print(f"Choose a course to edit:")
+    course,index = pick_course()
+
+    if course:
+        while True:
+            print(f"What attribute would you like to edit?\n"
+                  f"Type 0 to exit.\n"
+                  f"1 - Course Number\n"
+                  f"2 - Semester Taken\n"
+                  f"3 - Delivery Method\n"
+                  f"4 - Status\n"
+                  f"5 - Grade")
+
+            user_input = input_integer()
+
+            if user_input == 0:
+                break
+            elif user_input == 1:
+                print(f"Please enter the new course number:")
+                new_course_number = input_string()
+                print(f"Old Value: {course.get_course_number()}\n"
+                      f"New Value: {new_course_number}\n"
+                      f"\n"
+                      f"Are you sure you'd like to\n"
+                      f"change this course's course number?\n"
+                      f"1 - Yes      2 - No")
+                if input_integer() == 1:
+                    course.set_course_number(new_course_number)
+                    continue
+                print(f"Edit cancelled; Course unchanged.")
+
+            elif user_input == 2:
+                print(f"Please enter the new semester taken:")
+                new_semester_taken = create_new_semester()
+                print(f"Old Value: {course.get_semester_taken()}\n"
+                      f"New Value: {new_semester_taken}\n"
+                      f"\n"
+                      f"Are you sure you'd like to\n"
+                      f"change this course's semester taken?\n"
+                      f"1 - Yes      2 - No")
+                if input_integer() == 1:
+                    course.set_semester_taken(new_semester_taken)
+                    continue
+                print(f"Edit cancelled; Course unchanged.")
+
+            elif user_input == 3:
+                print(f"Please enter the new delivery method:")
+                new_delivery_method = input_string()
+                print(f"Old Value: {course.get_delivery_method()}\n"
+                      f"New Value: {new_delivery_method}\n"
+                      f"\n"
+                      f"Are you sure you'd like to\n"
+                      f"change this course's delivery method?\n"
+                      f"1 - Yes      2 - No")
+                if input_integer() == 1:
+                    course.set_delivery_method(new_delivery_method)
+                    continue
+                print(f"Edit cancelled; Course unchanged.")
+
+            elif user_input == 4:
+                print(f"Please enter the new course status:")
+                new_status = input_string()
+                print(f"Old Value: {course.get_status()}\n"
+                      f"New Value: {new_status}\n"
+                      f"\n"
+                      f"Are you sure you'd like to\n"
+                      f"change this course's status?\n"
+                      f"1 - Yes      2 - No")
+                if input_integer() == 1:
+                    course.set_status(new_status)
+                    continue
+                print(f"Edit cancelled; Course unchanged.")
+
+            elif user_input == 5:
+                print(f"Please enter the new course grade:")
+                new_grade = input_string()
+                print(f"Old Value: {course.get_grade()}\n"
+                      f"New Value: {new_grade}\n"
+                      f"\n"
+                      f"Are you sure you'd like to\n"
+                      f"change this course's grade?\n"
+                      f"1 - Yes      2 - No")
+                if input_integer() == 1:
+                    course.set_grade(new_grade)
+                    continue
+                print(f"Edit cancelled; Course unchanged.")
+
+def pick_course(linked_list : LinkedList):
+    if len(linked_list) == 0:
+        print(f"Cannot proceed further; No courses in list!")
+        return False,None
+    data = []
+    curr = linked_list.get_head()
+    while curr:
+        data.append(curr.get_data())
+        curr = curr.get_next()
+
+    print(f"Pick a course from this list, or 0 to cancel")
+    index = 0
+    for curr in data:
+        print(f"{index + 1} : {curr.get_course_number()}")
+        index += 1
+
+    user_input = input_integer()
+
+    while user_input < 0 or user_input > len(data):
+        print(f"Selection outside of range!")
+        user_input = input_integer()
+    if user_input == 0:
+        return False,None
+
+    index = user_input - 1
+
+    return data[index],index
+
+def edit_course_list(course_list : LinkedList):
+    while True:
+        print(f"Editing the student's course list!\n"
+              f"What would you like to do?\n"
+              f"Type 0 to exit.\n"
+              f"1 - Add a course\n"
+              f"2 - Edit a course\n"
+              f"3 - Remove a course\n"
+              f"4 - Display a course")
+
+        user_input = input_integer()
+
+        if user_input == 0:
+            break
+
+        elif user_input == 1:
+            print(f"Adding a course!")
+            new_course = create_new_course()
+            print(f"{new_course}\n"
+                  f"Are you sure you'd like to add this course?\n"
+                  f"1 - Yes      2 - No")
+            if input_integer() == 1:
+                course_list.insert(new_course)
+                print(f"Successfully added.")
+                continue
+            print(f"Edit cancelled; Course not added.")
+
+        elif user_input == 2:
+            print(f"Editing a course!")
+            edit_course()
+
+        elif user_input == 3:
+            print(f"Removing a course!")
+            course,index = pick_course(course_list)
+            if course:
+                course_list.delete(course)
+                print(f"Successfully deleted!")
+                continue
+            print(f"Deletion cancelled.")
+        elif user_input == 4:
+            print(f"Displaying a course!")
+            course,index = pick_course(course_list)
+            if course:
+                print(f"{course}\n")
+                continue
+            print(f"Display cancelled.")
+        else:
+            print(f"Invalid option.")
 
 def edit_student():
     print(f"Choose a student to edit:")
@@ -371,6 +536,7 @@ def edit_student():
                       f"1 - Yes      2 - No")
                 if input_integer() == 1:
                     student.set_name(new_name)
+                    print(f"Successfully changed.")
                     continue
                 print(f"Edit cancelled; Student unchanged.")
 
@@ -385,6 +551,7 @@ def edit_student():
                       f"1 - Yes      2 - No")
                 if input_integer() == 1:
                     student.set_id(new_id)
+                    print(f"Successfully changed.")
                     continue
                 print(f"Edit cancelled; Student unchanged.")
 
@@ -399,6 +566,7 @@ def edit_student():
                       f"1 - Yes      2 - No")
                 if input_integer() == 1:
                     student.set_mailing_address(new_mailing_address)
+                    print(f"Successfully changed.")
                     continue
                 print(f"Edit cancelled; Student unchanged.")
 
@@ -413,6 +581,7 @@ def edit_student():
                       f"1 - Yes      2 - No")
                 if input_integer() == 1:
                     student.set_email_address(new_email_list)
+                    print(f"Successfully changed.")
                     continue
                 print(f"Edit cancelled; Student unchanged.")
 
@@ -427,6 +596,7 @@ def edit_student():
                       f"1 - Yes      2 - No")
                 if input_integer() == 1:
                     student.set_phone_number(new_phone_number_list)
+                    print(f"Successfully changed.")
                     continue
                 print(f"Edit cancelled; Student unchanged.")
 
@@ -441,6 +611,7 @@ def edit_student():
                       f"1 - Yes      2 - No")
                 if input_integer() == 1:
                     student.set_birth_date(new_birth_date)
+                    print(f"Successfully changed.")
                     continue
                 print(f"Edit cancelled; Student unchanged.")
 
@@ -455,6 +626,7 @@ def edit_student():
                       f"1 - Yes      2 - No")
                 if input_integer() == 1:
                     student.set_acceptance_date(new_acceptance_date)
+                    print(f"Successfully changed.")
                     continue
                 print(f"Edit cancelled; Student unchanged.")
 
@@ -469,6 +641,7 @@ def edit_student():
                       f"1 - Yes      2 - No")
                 if input_integer() == 1:
                     student.set_start_semester(new_start_semester)
+                    print(f"Successfully changed.")
                     continue
                 print(f"Edit cancelled; Student unchanged.")
 
@@ -483,10 +656,14 @@ def edit_student():
                       f"1 - Yes      2 - No")
                 if input_integer() == 1:
                     student.set_intended_major(new_intended_major)
+                    print(f"Successfully changed.")
                     continue
                 print(f"Edit cancelled; Student unchanged.")
 
             elif user_input == 10:
+                edit_course_list(student.get_course_list())
+
+                """
                 print(f"Please enter the new course list:")
                 new_course_list = create_new_course_list()
                 print(f"Old Value: {student.get_course_list()}\n"
@@ -499,6 +676,9 @@ def edit_student():
                     student.set_course_list(new_course_list)
                     continue
                 print(f"Edit cancelled; Student unchanged.")
+                """
+            else:
+                print(f"Invalid option.")
 
     return
 
