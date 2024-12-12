@@ -12,6 +12,13 @@ class Course():
         self.__status = status
         self.__grade = grade
 
+    def __str__(self):
+        return (f"Course Number: {self.__course_number}\n"
+                f"Semester Taken: {self.__semester_taken}\n"
+                f"Delivery Method: {self.__delivery_method}\n"
+                f"Status: {self.__status}\n"
+                f"Grade: {self.__grade}")
+
     # Getters
     def get_course_number(self):
         return self.__course_number
