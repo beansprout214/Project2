@@ -11,21 +11,12 @@ class Advisor():
         self.__advisee_list = advisee_list
 
     def __str__(self):
-        str_advisee_list = ""
-        index = 0
-        advisee_list = self.__advisee_list
-        if advisee_list and not advisee_list.get_head() is None:
-            curr_node = advisee_list.get_head()
-            while not curr_node is None:
-                advisee = curr_node.get_data()
-                str_advisee_list += f"Advisee {index + 1}: {advisee.get_name()}"
-                curr_node = curr_node.get_next()
-                index += 1
+
 
         return (f'Name: {self.__name}\n'
                 f'Title: {self.__title}\n'
                 f'Department: {self.__department}\n'
-                f'{str_advisee_list}')
+                f'{self.str_advisee_list()}')
 
     # Getters
     def get_name(self):
@@ -52,3 +43,16 @@ class Advisor():
 
     def set_advisee_list(self, advisee_list):
         self.__advisee_list = advisee_list
+
+    def str_advisee_list(self):
+        str_advisee_list = ""
+        index = 0
+        advisee_list = self.__advisee_list
+        if advisee_list and not advisee_list.get_head() is None:
+            curr_node = advisee_list.get_head()
+            while not curr_node is None:
+                advisee = curr_node.get_data()
+                str_advisee_list += f"Advisee {index + 1}: {advisee.get_name()}\n"
+                curr_node = curr_node.get_next()
+                index += 1
+        return str_advisee_list
