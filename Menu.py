@@ -285,21 +285,21 @@ def create_new_student():
 # Functions for student management
 # Handles the manipulation of Student objects within the Students list
 
-def pick_student():
-    if len(students) == 0:
+def pick_student(student_list):
+    if len(student_list) == 0:
         print(f"Cannot proceed further; No students in list!")
         return False,None
 
     index = 1
 
     print(f"Pick a student from this list, or 0 to cancel:")
-    for student in students:
+    for student in student_list:
         print(f"{index} : {student.get_name()}")
         index += 1
 
     user_choice = input_integer()
 
-    while (user_choice < 0) or (user_choice > len(students)):
+    while (user_choice < 0) or (user_choice > len(student_list)):
         print(f"Selection outside of range!")
         user_choice = input_integer()
 
@@ -309,7 +309,7 @@ def pick_student():
 
     index = user_choice - 1
 
-    return students[index],index
+    return student_list[index],index
 
 def pick_advisor():
     if len(advisors) == 0:
@@ -337,10 +337,7 @@ def pick_advisor():
 
     return advisors[index],index
 
-def edit_course():
-    print(f"Choose a course to edit:")
-    course,index = pick_course()
-
+def edit_course(course):
     if course:
         while True:
             print(f"What attribute would you like to edit?\n"
@@ -482,7 +479,11 @@ def edit_course_list(course_list : LinkedList):
 
         elif user_input == 2:
             print(f"Editing a course!")
-            edit_course()
+            course,index = pick_course(course_list)
+            if course:
+                edit_course(course)
+                continue
+            print(f"Edit cancelled.")
 
         elif user_input == 3:
             print(f"Removing a course!")
@@ -502,9 +503,101 @@ def edit_course_list(course_list : LinkedList):
         else:
             print(f"Invalid option.")
 
+def pick_advisee(linked_list : LinkedList):
+    if len(linked_list) == 0:
+        print(f"Cannot proceed further; No courses in list!")
+        return False,None
+    data = []
+    curr = linked_list.get_head()
+    while curr:
+        data.append(curr.get_data())
+        curr = curr.get_next()
+
+    print(f"Pick a course from this list, or 0 to cancel")
+    index = 0
+    for curr in data:
+        print(f"{index + 1} : {curr.get_course_number()}")
+        index += 1
+
+    user_input = input_integer()
+
+    while user_input < 0 or user_input > len(data):
+        print(f"Selection outside of range!")
+        user_input = input_integer()
+    if user_input == 0:
+        return False,None
+
+    index = user_input - 1
+
+    return data[index],index
+
+def edit_advisee_list(advisee_list : LinkedList):
+    while True:
+        print(f"Editing the student's course list!\n"
+              f"What would you like to do?\n"
+              f"Type 0 to exit.\n"
+              f"1 - Add an advisee\n"
+              f"2 - Remove an advisee\n"
+              f"3 - Display an advisee")
+
+        inside = []
+        outside = []
+        for student in students:
+            if advisee_list.find(student):
+                inside.append(student)
+            else:
+                outside.append(student)
+
+        user_input = input_integer()
+
+        if user_input == 0:
+            break
+
+        elif user_input == 1:
+            print(f"Adding an advisee!")
+
+            student,index = pick_student(outside)
+            if student:
+                print(f"{student.get_name()}\n"
+                    f"Are you sure you'd like to add\n"
+                    f"this student to the advisee list?\n"
+                    f"1 - Yes      2 - No")
+                if input_integer() == 1:
+                    advisee_list.insert(student)
+                    print(f"Successfully added.")
+                    continue
+            print(f"Edit cancelled; Advisee not added.")
+
+        elif user_input == 2:
+            print(f"Removing an advisee!")
+
+            student,index = pick_student(inside)
+            if student:
+                print(f"{student.get_name()}\n"
+                    f"Are you sure you'd like to remove\n"
+                    f"this student from the advisee list?\n"
+                    f"1 - Yes      2 - No")
+                if input_integer() == 1:
+                    advisee_list.delete(student)
+                    print(f"Successfully removed.")
+                    continue
+            print(f"Edit cancelled. Advisee not removed.")
+
+        elif user_input == 3:
+            print(f"Displaying an advisee!")
+
+            student,index = pick_student(inside)
+            if student:
+                print(f"{student}\n")
+                continue
+            print(f"Display cancelled.")
+        else:
+            print(f"Invalid option.")
+
+
 def edit_student():
     print(f"Choose a student to edit:")
-    student,index = pick_student()
+    student,index = pick_student(students)
 
     if student:
         while True:
@@ -690,7 +783,7 @@ def add_student():
 
 def delete_student():
     print(f"Choose a student to delete:")
-    student,index = pick_student()
+    student,index = pick_student(students)
 
     cancel = True
 
@@ -706,12 +799,14 @@ def delete_student():
         return False
 
     students.pop(index)
+    for advisor in advisors:
+        advisor.get_advisee_list().delete(student)
     print(f"Student deleted successfully.")
     return True
 
 def display_student():
     print(f"Choose a student to display:")
-    student,index = pick_student()
+    student,index = pick_student(students)
     if student:
         print(f"{student}\n\n")
         return
@@ -722,9 +817,11 @@ def create_new_advisee_list():
     print(f"Creating a new advisee list!\n"
           f"Please select a student to add to the list.")
     new_advisee_list = LinkedList()
-    student,index = pick_student()
+    candidates = students.copy()
+    student,index = pick_student(candidates)
     if student:
         new_advisee_list.insert(student)
+        candidates.pop(index)
         while True:
             print(f"Would you like to add more\n"
                   f"students to the advisee list?\n"
@@ -732,7 +829,7 @@ def create_new_advisee_list():
             cancel = input_integer() != 1
             if cancel:
                 break
-            student,index = pick_student()
+            student,index = pick_student(candidates)
             if not student:
                 break
             if new_advisee_list.find(student):
@@ -740,13 +837,14 @@ def create_new_advisee_list():
                       f"Choose a different student.")
                 continue
             new_advisee_list.insert(student)
+            candidates.pop(index)
     return new_advisee_list
 
 def create_new_advisor():
     print(f"Creating a new advisor!")
 
     print(f"Please enter their name:")
-    new_name = input_string()
+    new_name = create_new_name()
     print(f"Please enter their title:")
     new_title = input_string()
     print(f"Please enter their department:")
@@ -836,31 +934,7 @@ def edit_advisor():
                 print(f"Edit cancelled; Advisor unchanged.")
 
             elif user_input == 4:
-                print(f"Please enter the new advisee list:")
-                new_advisee_list = create_new_advisee_list()
-                print(f"Old List:\n"
-                      f"{advisor.str_advisee_list()}")
-
-                print(f"New List:")
-                str_advisee_list = ""
-                index = 0
-                advisee_list = new_advisee_list
-                if advisee_list and not advisee_list.get_head() is None:
-                    curr_node = advisee_list.get_head()
-                    while not curr_node is None:
-                        advisee = curr_node.get_data()
-                        str_advisee_list += f"Advisee {index + 1}: {advisee.get_name()}\n"
-                        curr_node = curr_node.get_next()
-                        index += 1
-                print(str_advisee_list)
-
-                print(f"Are you sure you'd like to\n"
-                      f"change this advisor's advisee list?\n"
-                      f"1 - Yes      2 - No")
-                if input_integer() == 1:
-                    advisor.set_advisee_list(new_advisee_list)
-                    continue
-                print(f"Edit cancelled; Advisor unchanged.")
+                edit_advisee_list(advisor.get_advisee_list())
 
 
 def delete_advisor():
