@@ -68,7 +68,9 @@ class LinkedList():
 
     def insert(self,
                data):
+        print(f"Inserting for {data}")
         new_node = Node(data)
+        print(f"Made node {new_node}")
         curr_tail = self.__tail
         if curr_tail:
             curr_tail.set_next(new_node)
@@ -79,23 +81,28 @@ class LinkedList():
 
     def find(self,
              key):
+        print(f"Searching for {key}")
         curr = self.__head
         while curr and curr.get_data() != key:
             curr = curr.get_next()
+        print(f"Found {curr}")
         return curr
 
     def delete(self,
                key):
-        node = self.find(key)
-        if node is None:
+        curr = self.__head
+        prev = None
+        while curr and curr.get_data() != key:
+            prev = curr
+            curr = curr.get_next()
+
+        if not curr:
             return
 
-        if node == self.__head:
-            self.__head = node.get_next()
-            return
+        if prev:
+            prev.set_next(curr.get_next())
+        else:
+            self.__head = curr.get_next()
 
-        prev = self.__head
-        while prev.get_next() != node:
-            prev = prev.get_next()
-        prev.set_next(node.get_next())
-        return
+        if curr == self.__tail:
+            self.__tail = prev
